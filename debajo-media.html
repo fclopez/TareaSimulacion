@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Test debajo de la media</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse set-radius-zero">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/img/simulacion.png" />
+                </a>
+
+            </div>
+
+            <div class="left-div">
+                <div class="user-settings-wrapper">
+                    <ul class="nav">
+                        <li class="dropdown">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- LOGO HEADER END-->
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                            <li><a href="index.html">kolmogorov</a></li>
+                            <li><a href="chi-cuadrado.html">Chicuadrado</a></li>
+                            <li><a href="sube-baja.html">Sube y baja</a></li>
+                            <li><a class="menu-top-active" href="debajo-media.html">Debajo de la media</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- MENU SECTION END-->
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-head-line">Test debajo de la media</h4>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">Subir archivos numeros aleatorios</label>
+                <input type="file" id="exampleInputFile" />
+                <br><button type="button" class="btn btn-danger">Aceptar</button>
+            </div>
+            <div class="row"><br>
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                          Resultados test de debajo de la media
+                        </div
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th><b> Dato </b></th>
+                                            <th><b> Resultado </b></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>N1</th>
+                                                <th class="N1"></th>
+                                            </tr>
+                                            <tr>
+                                                <th>N2</th>
+                                                <th class="N2"></th>
+                                            </tr>
+                                            <tr>
+                                                <th>b</th>
+                                                <th class="b"></th>
+                                            </tr>
+                                            <tr>
+                                                <th>µb</th>
+                                                <th class="Mb"></th>
+                                            </tr>
+                                            <tr>
+                                                <th> σb<sup>2</sup></th>
+                                                <th class="Mb2"></th>
+                                            </tr>
+                                            <tr>
+                                                <th> σb</th>
+                                                <th class="varianza"></th>
+                                            </tr>
+                                            <tr>
+                                                <th> Z</th>
+                                                <th class="z"></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="col-md-4" >
+                         
+                          <div class="alert alert-info">
+                             <strong>Total resultado Z:</strong> <p align="center"><label class="totalz"></label></p>
+                               <p align="center"><b><label class="respuestaDebajo"></label></b></p>
+                          </div>
+                             
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT-WRAPPER SECTION END-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    &copy; PERSPICAPPS</a>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/jquery-1.11.1.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+</body>
+<script type="text/javascript">
+var listaNumerosAleatorios = [0.474,0.958,0.187,0.405,0.768,0.619,0.969,0.079,0.061,0.457,0.695,0.412,0.691,0.263,0.042,0.895,0.348,0.332,0.478,0.094,0.473,0.502,0.083,0.503,0.876,0.635,0.539,0.108,0.892,0.023,0.526,0.413,0.033,0.731,0.226,0.688,0.410,0.572,0.357,0.558,0.047,0.470,0.310,0.983,0.154,0.104,0.944,0.638,0.031,0.820,0.704,0.862,0.492,0.422,0.048,0.690,0.607,0.461,0.828,0.315];
+var listaEstados = [];
+var media = 0.499;
+var contadorPositivos = 0;
+var contadorNegativos = 0;
+$(".totalChi").append(media);
+$(document).ready(()=>{
+    recorrerArregloAleatorio(imprimirDatos);
+
+});
+
+function calcular (positivos, negativos, estados, tamanoListaNumeros){
+    
+    var Mb=((2*(positivos*negativos))/(tamanoListaNumeros))+(1/2);
+    var varianzaCuadrada=2*positivos*negativos*((2*positivos*negativos)-tamanoListaNumeros)/(Math.pow(tamanoListaNumeros,2)*(tamanoListaNumeros-1));
+    var varianza=Math.sqrt(varianzaCuadrada,2);
+    var z=(estados-Mb)/varianza;
+    
+
+    $(".Mb").html(Mb.toFixed(2));
+    $(".Mb2").html(varianzaCuadrada.toFixed(2));
+    $(".varianza").html(varianza.toFixed(2));
+    $(".z").html(z.toFixed(2));
+
+    $(".totalz").append(z);
+    if(z>=-1.96 && z<=1.96){
+            $(".respuestaDebajo").append("Se acepta la hipotesis nula de independencia bajo este test.");
+        }else{
+            $(".respuestaDebajo").append("No Se acepta la hipotesis nula de independencia bajo este test.");
+        }
+}
+
+function imprimirDatos(positivos, negativos, estados){
+    $(".N1").html(positivos);
+    $(".N2").html(negativos);
+    $(".b").html(estados.length);
+    calcular(positivos,negativos,estados.length,listaNumerosAleatorios.length);
+}
+
+function recorrerArregloAleatorio(callback){
+    /*recorre cada elemento de la lista de datos*/
+    $.each(listaNumerosAleatorios,(indice, valor)=>{
+        /*compara si el valor actual que está dentro de la lista es mayor o menor a la media*/
+        if(valor>media){
+            /*si el estado anterior es diferente al estado actual, agreguelo a la lista, si no, pues no. Y suma un elemento encima de la media */
+            (listaEstados[listaEstados.length-1] != 1)?listaEstados.push(1):"";
+             contadorPositivos+=1;
+        }else{
+            /*si el estado anterior es diferente al estado actual, agreguelo a la lista, si no, pues no  */
+            (listaEstados[listaEstados.length-1] != 0)?listaEstados.push(0):"";
+        }
+    });
+
+    /*Calcula el numero de elementos debajo de la media y los envia como paramtros al funcion callback */
+    contadorNegativos = listaNumerosAleatorios.length - contadorPositivos;
+    callback(contadorPositivos, contadorNegativos, listaEstados);
+}
+
+</script>
+</html>
