@@ -22,7 +22,6 @@
                 <a class="navbar-brand" href="index.html">
                     <img src="assets/img/simulacion.png" />
                 </a>
-
             </div>
 
             <div class="left-div">
@@ -63,8 +62,9 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputFile">Subir archivos numeros aleatorios</label>
-                <input type="file" id="exampleInputFile" />
-                <br><button type="button" class="btn btn-danger">Aceptar</button>
+                <input type="file" id="inputFile" />
+                <br><button type="button" class="btn btn-danger" id="cargarAleatorios">Aceptar</button>
+				<!--<pre id="contenido-archivo"></pre>-->
             </div>
             <div class="row"><br>
                 <div class="panel panel-default">
@@ -145,11 +145,33 @@ var listaEstados = [];
 var media = 0.499;
 var contadorPositivos = 0;
 var contadorNegativos = 0;
+var datosEntrada = [];
+
 $(".totalChi").append(media);
 $(document).ready(()=>{
     recorrerArregloAleatorio(imprimirDatos);
 
 });
+
+$('#cargarAleatorios').click(()=>{
+	cargarNumeroAleatorios();
+});
+
+
+function cargarNumeroAleatorios(){
+	var archivo = document.getElementById('inputFile').files[0];
+	if (!archivo) {
+		return;
+	}
+	
+  var lector = new FileReader();
+  lector.onload = function(e) {
+    var contenido = e.target.result;
+	datosEntrada = contenido.split("\r\n").map(n => parseFloat(n));
+  };
+  lector.readAsText(archivo);
+
+}
 
 function calcular (positivos, negativos, estados, tamanoListaNumeros){
     
